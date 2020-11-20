@@ -16,6 +16,45 @@ app.use(cors())
 app.get('/customer/me', auth,(req,res)=>{
     res.send(req.customer)
 })
+
+
+app.post('/customer/logout', auth, (req,res)=>{
+    var query = `UPDATE Customer
+    SET Token = NULL
+    WHERE CustomerPK = ${req.customer.CustomerPK}`
+
+    db.executeQuery(query)
+        .then(()=>{res.status(200).send()})
+        .catch((error)=>{
+            console.log("error in POST /contacts/logout", error)
+            res.status(500).send()
+    })
+})
+
+
+app.get('/reviews/me', auth, async(req,res)=>{
+    let contactPK = req.customer.CustomerPK;
+    console.log(contactPK);
+    var query = ` SELECT ReviewPK, Review, Rating, ProductFK, CustomerFK
+  
+    FROM Reviews
+    WHERE CustomerFK = ${contactPK} `
+
+    var dbb = await db.executeQuery(query)
+    
+    .then(()=>{res.status(200).send()
+        })
+    .catch((error)=>{
+        console.log("error in GET /review/me", error)
+        res.status(500).send()
+    })
+    
+
+
+})
+
+
+
 app.post("/reviews", auth, async (req,res)=>{
 
     try{
@@ -143,9 +182,10 @@ var insertQuery = `insert into customer(nameFirst,nameLast,Email,Password)
 values('${nameFirst}','${nameLast}','${email}','${hashedPassword}')`
 
 db.executeQuery(insertQuery)
-    .then(()=>{res.status(201).send})
-    .catch((err)=>{
-        console.log("error in POST /customers", err)
+.then(()=>{res.status(201).send()})
+.catch((err)=>{
+    console.log("error in POST /contacts",err)
+    res.status(500).send()
     })
 })
 
