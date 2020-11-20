@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/c0a098fe-2f68-4a55-9007-a3d397abdc45/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/cis410-fa20-gajan-api",
+    "appService.deploySubpath": "."
+}
