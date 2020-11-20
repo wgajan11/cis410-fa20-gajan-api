@@ -6,8 +6,11 @@ const jwt = require('jsonwebtoken')
 const cors = require('cors')
 const config = require('./config.js')
 const auth = require('./middleware/authenticate')
-app.use(express.json())
+
+
 const app = express();
+app.use(express.json())
+app.use(express.json())
 app.use(cors())
 
 app.get('/customer/me', auth,(req,res)=>{
@@ -39,35 +42,6 @@ app.post("/reviews", auth, async (req,res)=>{
     }
 })
 
-// app.post("/reviews", auth, async (req, res)=>{
-//     // try{
-//         var productFK = req.body.productFK;
-//         var review = req.body.review;
-//         var rating = req.body.rating;
-
-//         if(!productFK || !review || !rating){res.status(400).send("bad request")}
-
-//         // summary = summary.relace("'","''")
-
-//         // let insertQuery = `INSERT INTO Reviews(Review, Rating, ProductFK, CustomerFK)
-//         // OUTPUT inserted.ReviewPK, inserted.Review, inserted.Rating, inserted.CustomerFK
-//         // VALUES('${review}','${rating}','${productFK}','${req.customer.CustomerPK}')`
-
-//         // let insertedReview = await db.executeQuery(insertQuery)
-
-//         // console.log(insertedReview)
-
-//         // console.log(req.customer)
-
-//         // res.send("here is your response")}
-//     // }
-//     // catch(error){
-//     //     console.log("error in POST /reviews", error);
-//     //     res.status(500).send()
-//     // }
-
-// })
-
 
 app.get("/hi", (req,res)=>{
     res.send('hello world')
@@ -77,9 +51,9 @@ app.post("/customer/login", async (req,res)=>{
     //  console.log(req.body)
     var email = req.body.email;
     var password = req.body.password;
-    if(!email || !password){
-        return res.status(400).send('bad request')
-    }
+        if(!email || !password){
+            return res.status(400).send('bad request')
+        }
 
     // check user email exisits in db
     var query = `SELECT * 
